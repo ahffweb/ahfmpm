@@ -21,7 +21,10 @@ describe('<Unit Test>', function() {
   describe('Model Project:', function() {
     beforeEach(function(done) {
       user = new User({
-        name: 'Full name',
+        name: {
+          first: 'Taylor',
+          last: 'McMonigle'
+        },
         email: 'test@test.com',
         username: 'user',
         password: 'password'
@@ -29,8 +32,33 @@ describe('<Unit Test>', function() {
 
       user.save(function() {
         project = new Project({
-          title: 'Project Title',
-          content: 'Project Content',
+          activity: [{
+            action: 'Updated project item progress',
+            date: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+            userId: '5446c7a0a0d8ebf089fb99d8'
+          }],
+          general: {
+            name: {
+              first: 'Taylor',
+              last: 'McMonigle'
+            },
+            department: 'Web',
+            email: 'taylor.mcmonigle@aidshealth.org',
+            costCenter: '57746',
+            additionalInfo: 'none',
+            projectName: 'New Web Project',
+            projectDescription: 'none',
+            completionDate: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+            departmentHeadApproving: 'Jason Farmer',
+            projectAudience: 'Kids',
+            projectMessage: 'Dont do drugs'
+          },
+          items: [{
+            title: 'new website',
+            progress: 50,
+            status: 'in progress'
+          }],
+          progress: 50,
           user: user
         });
 
@@ -42,16 +70,16 @@ describe('<Unit Test>', function() {
       it('should be able to save without problems', function(done) {
         return project.save(function(err) {
           should.not.exist(err);
-          project.title.should.equal('Project Title');
-          project.content.should.equal('Project Content');
+          project.general.name.first.should.equal('Taylor');
+          project.general.name.last.should.equal('McMonigle');
           project.user.should.not.have.length(0);
           project.created.should.not.have.length(0);
           done();
         });
       });
 
-      it('should be able to show an error when try to save without title', function(done) {
-        project.title = '';
+      it('should be able to show an error when try to save without first name', function(done) {
+        project.general.name.first = '';
 
         return project.save(function(err) {
           should.exist(err);
@@ -59,8 +87,8 @@ describe('<Unit Test>', function() {
         });
       });
 
-      it('should be able to show an error when try to save without content', function(done) {
-        project.content = '';
+      it('should be able to show an error when try to save without last name', function(done) {
+        project.general.name.last = '';
 
         return project.save(function(err) {
           should.exist(err);

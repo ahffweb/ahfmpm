@@ -54,8 +54,34 @@
 
           // test expected GET request
           $httpBackend.expectGET('projects').respond([{
-            title: 'An Project about MEAN',
-            content: 'MEAN rocks!'
+            activity: [{
+              action: 'Updated project item progress',
+              date: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+              userId: '5446c7a0a0d8ebf089fb99d8'
+            }],
+            general: {
+              name: {
+                first: 'Taylor',
+                last: 'McMonigle'
+              },
+              department: 'Web',
+              email: 'taylor.mcmonigle@aidshealth.org',
+              costCenter: '57746',
+              additionalInfo: 'none',
+              projectName: 'New Web Project',
+              projectDescription: 'none',
+              completionDate: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+              departmentHeadApproving: 'Jason Farmer',
+              projectAudience: 'Kids',
+              projectMessage: 'Dont do drugs'
+            },
+            items: [{
+              title: 'new website',
+              progress: 50,
+              status: 'in progress'
+            }],
+            progress: 50
+
           }]);
 
           // run controller
@@ -64,8 +90,33 @@
 
           // test scope value
           expect(scope.projects).toEqualData([{
-            title: 'An Project about MEAN',
-            content: 'MEAN rocks!'
+            activity: [{
+              action: 'Updated project item progress',
+              date: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+              userId: '5446c7a0a0d8ebf089fb99d8'
+            }],
+            general: {
+              name: {
+                first: 'Taylor',
+                last: 'McMonigle'
+              },
+              department: 'Web',
+              email: 'taylor.mcmonigle@aidshealth.org',
+              costCenter: '57746',
+              additionalInfo: 'none',
+              projectName: 'New Web Project',
+              projectDescription: 'none',
+              completionDate: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+              departmentHeadApproving: 'Jason Farmer',
+              projectAudience: 'Kids',
+              projectMessage: 'Dont do drugs'
+            },
+            items: [{
+              title: 'new website',
+              progress: 50,
+              status: 'in progress'
+            }],
+            progress: 50
           }]);
 
         });
@@ -102,8 +153,33 @@
           // fixture expected POST data
           var postProjectData = function() {
             return {
-              title: 'An Project about MEAN',
-              content: 'MEAN rocks!'
+              activity: [{
+                action: 'Updated project item progress',
+                date: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+                userId: '5446c7a0a0d8ebf089fb99d8'
+              }],
+              general: {
+                name: {
+                  first: 'Taylor',
+                  last: 'McMonigle'
+                },
+                department: 'Web',
+                email: 'taylor.mcmonigle@aidshealth.org',
+                costCenter: '57746',
+                additionalInfo: 'none',
+                projectName: 'New Web Project',
+                projectDescription: 'none',
+                completionDate: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+                departmentHeadApproving: 'Jason Farmer',
+                projectAudience: 'Kids',
+                projectMessage: 'Dont do drugs'
+              },
+              items: [{
+                title: 'new website',
+                progress: 50,
+                status: 'in progress'
+              }],
+              progress: 50
             };
           };
 
@@ -111,15 +187,41 @@
           var responseProjectData = function() {
             return {
               _id: '525cf20451979dea2c000001',
-              title: 'An Project about MEAN',
-              content: 'MEAN rocks!'
+              activity: [{
+                action: 'Updated project item progress',
+                date: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+                userId: '5446c7a0a0d8ebf089fb99d8'
+              }],
+              general: {
+                name: {
+                  first: 'Taylor',
+                  last: 'McMonigle'
+                },
+                department: 'Web',
+                email: 'taylor.mcmonigle@aidshealth.org',
+                costCenter: '57746',
+                additionalInfo: 'none',
+                projectName: 'New Web Project',
+                projectDescription: 'none',
+                completionDate: 'Tue Jan 27 2015 14:30:54 GMT-0800 (PST)',
+                departmentHeadApproving: 'Jason Farmer',
+                projectAudience: 'Kids',
+                projectMessage: 'Dont do drugs'
+              },
+              items: [{
+                title: 'new website',
+                progress: 50,
+                status: 'in progress'
+              }],
+              progress: 50
             };
           };
 
           // fixture mock form input values
-          scope.title = 'An Project about MEAN';
-          scope.content = 'MEAN rocks!';
-
+          scope.general.name.first = 'Taylor';
+          scope.general.name.last = 'McMonigle';
+          scope.general.department = 'Web';
+          scope.general.email = 'taylor.mcmonigle@aidshealth.org';
           // test post request is sent
           $httpBackend.expectPOST('projects', postProjectData()).respond(responseProjectData());
 
@@ -128,8 +230,8 @@
           $httpBackend.flush();
 
           // test form input(s) are reset
-          expect(scope.title).toEqual('');
-          expect(scope.content).toEqual('');
+          expect(scope.general.name.first).toEqual('');
+          expect(scope.general.name.last).toEqual('');
 
           // test URL location to new object
           expect($location.path()).toBe('/projects/' + responseProjectData()._id);
